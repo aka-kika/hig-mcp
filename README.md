@@ -1,6 +1,6 @@
 # hig-mcp — Apple HIG design tokens for AI coding agents
 
-![hig-mcp — Apple Human Interface Guidelines as structured MCP tokens](docs/assets/hero.png)
+![hig-mcp — Apple Human Interface Guidelines as structured MCP tokens](https://raw.githubusercontent.com/aka-kika/hig-mcp/main/docs/assets/hero.png)
 
 **An MCP server that gives Claude Code, Cursor, and any MCP client the Apple Human Interface Guidelines as structured data** — real system color values, the type ramp, Liquid Glass constraints, and SwiftUI mappings — instead of prose to misread or stale hex to hallucinate.
 
@@ -41,7 +41,7 @@ Honest data beats confident data.
 ## Quick start
 
 ```sh
-pipx install .        # or: pip install -e .
+pipx install hig-mcp
 claude mcp add hig -- hig-mcp
 ```
 
