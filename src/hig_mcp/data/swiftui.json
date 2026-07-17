@@ -1,0 +1,93 @@
+{
+  "_meta": {
+    "category": "swiftui",
+    "note": "Maps HIG components to SwiftUI. Stable APIs (Button, NavigationStack, TabView, List) are confident. Liquid-Glass modifier names below were confirmed against iOS 26 shipping APIs (2026-06); still confirm exact signatures via Xcode quick-help before shipping.",
+    "liquid_glass_api": ".glassEffect(_:in:) takes a Glass value: .regular (default) or .clear; chain .interactive() for touch response and .tint(Color) for colored glass. Wrap multiple glass shapes in GlassEffectContainer to merge/morph them, and .glassEffectID(_:in:) to animate between them. Confirm exact signatures in Xcode.",
+    "verify_against": "current Xcode SDK + HIG component page"
+  },
+  "components": {
+    "button": {
+      "swiftui": "Button(action:label:)",
+      "styles": [".bordered", ".borderedProminent", ".plain"],
+      "liquid_glass_style": {"name": ".buttonStyle(.glass) (secondary) | .buttonStyle(.glassProminent) (primary); custom views: .glassEffect(_:in:)", "src": "apple-system", "note": "Shipping iOS 26 APIs."},
+      "tokens": ["color.system.systemBlue (tint)", "layout.hit_target", "typography.headline (label)"],
+      "hig_path": "/design/human-interface-guidelines/buttons"
+    },
+    "navigation_bar": {
+      "swiftui": "NavigationStack { ... }.toolbar { ... }",
+      "large_title": ".navigationBarTitleDisplayMode(.large)",
+      "tokens": ["typography.largeTitle", "materials.system_materials (bar background)"],
+      "hig_path": "/design/human-interface-guidelines/navigation-bars"
+    },
+    "tab_bar": {
+      "swiftui": "TabView { Tab(...) { ... } }",
+      "liquid_glass": {"note": "Liquid Glass is applied to TabView automatically in iOS 26 (plus scroll-edge effects); use .tabBarMinimizeBehavior to control minimize-on-scroll.", "src": "apple-system"},
+      "tokens": ["color.system.systemBlue (selected)", "materials.liquid_glass"],
+      "hig_path": "/design/human-interface-guidelines/tab-bars"
+    },
+    "list": {
+      "swiftui": "List { ... }",
+      "styles": [".plain", ".insetGrouped", ".grouped"],
+      "tokens": ["color.semantic_dynamic (background/separator)", "layout.spacing"],
+      "hig_path": "/design/human-interface-guidelines/lists-and-tables"
+    },
+    "sheet": {
+      "swiftui": ".sheet(isPresented:) { ... }",
+      "detents": ".presentationDetents([.medium, .large])",
+      "tokens": ["layout.radii (continuous)", "materials.system_materials"],
+      "hig_path": "/design/human-interface-guidelines/sheets"
+    },
+    "slider": {
+      "swiftui": "Slider(value:in:step:)",
+      "progress_variant": "ProgressView(value:) for non-interactive progress",
+      "tokens": ["color.system.systemBlue (.tint for the active track)", "layout.hit_target (thumb + row >= 44pt)"],
+      "note": "Apple publishes no track/thumb metrics; the thumb and its row honor the 44pt hit target. Tint the active track with .tint — there is no dedicated 'progress' semantic color role.",
+      "hig_path": "/design/human-interface-guidelines/sliders"
+    },
+    "text_field": {
+      "swiftui": "TextField(_:text:)",
+      "styles": [".roundedBorder", ".plain"],
+      "tokens": ["typography.body", "layout.hit_target", "color.semantic_dynamic (label; placeholder = secondaryLabel; separator)"],
+      "hig_path": "/design/human-interface-guidelines/text-fields"
+    },
+    "toggle": {
+      "swiftui": "Toggle(_:isOn:)",
+      "styles": [".switch", ".button", ".checkbox (macOS)"],
+      "tokens": ["color.system.systemGreen (default on-state; override with .tint)", "layout.hit_target"],
+      "hig_path": "/design/human-interface-guidelines/toggles"
+    },
+    "picker": {
+      "swiftui": "Picker(_:selection:) { ... }",
+      "styles": [".menu", ".segmented", ".wheel", ".inline", ".navigationLink"],
+      "tokens": ["typography.body", "color.system.systemBlue (selection/tint)", "layout.hit_target"],
+      "hig_path": "/design/human-interface-guidelines/pickers"
+    },
+    "segmented_control": {
+      "swiftui": "Picker(_:selection:) { ... }.pickerStyle(.segmented)",
+      "tokens": ["typography.subheadline", "color.semantic_dynamic (background)", "layout.hit_target"],
+      "hig_path": "/design/human-interface-guidelines/segmented-controls"
+    },
+    "stepper": {
+      "swiftui": "Stepper(_:value:in:step:)",
+      "tokens": ["typography.body (label)", "layout.hit_target"],
+      "hig_path": "/design/human-interface-guidelines/steppers"
+    },
+    "menu": {
+      "swiftui": "Menu(_:) { Button... }; long-press / right-click via .contextMenu { ... }",
+      "tokens": ["typography.body", "materials.system_materials (menu background)", "layout.radii (continuous)"],
+      "hig_path": "/design/human-interface-guidelines/menus"
+    },
+    "alert": {
+      "swiftui": ".alert(_:isPresented:) { Button... } message: { ... }; .confirmationDialog(...) for action sheets",
+      "tokens": ["typography.headline (title)", "typography.body (message)", "color.system.systemBlue (default action)", "color.system.systemRed (destructive role via Button(role: .destructive))"],
+      "hig_path": "/design/human-interface-guidelines/alerts"
+    },
+    "progress": {
+      "swiftui": "ProgressView(value:total:) | ProgressView() (indeterminate spinner)",
+      "styles": [".linear", ".circular"],
+      "note": "No dedicated 'progress' semantic color — tint the bar with a system color via .tint.",
+      "tokens": ["color.system.systemBlue (.tint)"],
+      "hig_path": "/design/human-interface-guidelines/progress-indicators"
+    }
+  }
+}

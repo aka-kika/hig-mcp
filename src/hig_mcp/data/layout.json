@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "category": "layout",
+    "note": "Apple does NOT publish a numeric spacing or radius scale. The hit target and continuous-corner facts are from the HIG; the spacing grid and radii are common community conventions, tagged as such. Prefer system spacing (SwiftUI default padding, Layout Margins) over magic numbers.",
+    "verify_against": "HIG > Foundations > Layout"
+  },
+  "hit_target": {
+    "min_pt": 44, "shape": "44x44", "src": "apple-hig",
+    "note": "Minimum comfortable tappable area for any control.",
+    "platform": "44x44pt is the TOUCH target — iOS / iPadOS / visionOS (gaze + pinch). macOS is pointer-based: standard control heights are smaller (~20-28pt) and there is no 44pt rule; verify against the macOS HIG before applying this on Mac."
+  },
+  "spacing": {
+    "src": "convention",
+    "grid_pt": 8,
+    "scale_pt": [4, 8, 12, 16, 20, 24, 32, 40, 48],
+    "layout_margin_pt": {"compact_width": 16, "regular_width": 20, "note": "Use system Layout Margins / safe area insets rather than hardcoding where possible."},
+    "floating_inset": {"note": "Apple publishes no numeric inset for floating glass panels / controls above a tab bar. Use a spacing-scale step (16-24pt) from the screen edge and clear the tab bar via safe-area insets, not a magic number.", "src": "convention"}
+  },
+  "radii": {
+    "src": "guidance",
+    "curvature": "Apple uses CONTINUOUS corners (squircle), not circular. In SwiftUI use RoundedRectangle(cornerRadius:, style: .continuous).",
+    "concentricity": "Nested rounded shapes should be concentric: outer_radius = inner_radius + padding, so corners stay parallel.",
+    "common_control_pt": {"small": 8, "medium": 12, "card": 16, "sheet": "system", "note": "Confirm against the live component; many system controls use capsule or system-managed radii."}
+  }
+}

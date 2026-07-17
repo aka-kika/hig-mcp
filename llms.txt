@@ -1,0 +1,16 @@
+# hig-mcp
+
+> MCP server serving Apple Human Interface Guidelines as structured design tokens for AI coding agents: current post-WWDC25 system colors, typography ramp, Liquid Glass constraints, layout metrics, SF Symbols, and SwiftUI component mappings. Offline and deterministic for tokens; live HIG prose via sosumi.ai.
+
+Audience: developers using Claude Code, Cursor, or any MCP client to build iOS, iPadOS, or macOS apps with SwiftUI.
+
+Key facts:
+- Apple refreshed system color values on 2025-06-09 (WWDC25 / Liquid Glass); most LLM training data predates this. hig-mcp serves the current values.
+- Four tools: hig_get_tokens, hig_check_liquid_glass, hig_swiftui, hig_fetch.
+- Every token is provenance-tagged (apple-system, apple-hig, wcag-aa, figma-effect, community-bestpractice); uncertain values are flagged verify:true.
+- Install: pipx install . && claude mcp add hig -- hig-mcp
+
+Repo: https://github.com/aka-kika/hig-mcp
+Docs: README.md
+
+Keywords: Apple HIG, Human Interface Guidelines, MCP server, Model Context Protocol, design tokens, Liquid Glass, SwiftUI, iOS 26, macOS Tahoe, Claude Code, Cursor, AI coding agent

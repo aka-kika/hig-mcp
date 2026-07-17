@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "category": "typography",
+    "font": "SF Pro (Display \u226520pt, Text <20pt); SF Mono for code; New York for serif.",
+    "note": "Point sizes are the default (Large) Dynamic Type sizes for iOS. Always drive UI from text styles (Font.largeTitle, .body...) so Dynamic Type scales them. Don't hardcode point sizes in shipping UI.",
+    "src": "apple-system",
+    "platform": "ios_text_styles = iOS/iPadOS Dynamic Type at the default (Large) setting. macos_text_styles = the macOS AppKit ramp (smaller, fixed; verified from HIG 2026-06-24). visionOS uses bolder versions of the Dynamic Type body/title styles — the HIG publishes no separate numeric table, so it is not listed here. Drive from text styles so each platform resolves its own size at runtime.",
+    "verify_against": "HIG > Foundations > Typography for the current platform"
+  },
+  "ios_text_styles": {
+    "largeTitle":   {"size": 34, "weight": "regular"},
+    "title1":       {"size": 28, "weight": "regular"},
+    "title2":       {"size": 22, "weight": "regular"},
+    "title3":       {"size": 20, "weight": "regular"},
+    "headline":     {"size": 17, "weight": "semibold"},
+    "body":         {"size": 17, "weight": "regular"},
+    "callout":      {"size": 16, "weight": "regular"},
+    "subheadline":  {"size": 15, "weight": "regular"},
+    "footnote":     {"size": 13, "weight": "regular"},
+    "caption1":     {"size": 12, "weight": "regular"},
+    "caption2":     {"size": 11, "weight": "regular"}
+  },
+  "macos_text_styles": {
+    "_note": "macOS AppKit system text styles in points (size / line height), from the HIG Typography specifications, verified 2026-06-24. macOS does NOT use iOS Dynamic Type sizes — these are smaller and fixed. 'emphasized' is the paired bolder weight.",
+    "src": "apple-hig",
+    "largeTitle":   {"size": 26, "weight": "regular", "line_height": 32, "emphasized": "bold"},
+    "title1":       {"size": 22, "weight": "regular", "line_height": 26, "emphasized": "bold"},
+    "title2":       {"size": 17, "weight": "regular", "line_height": 22, "emphasized": "bold"},
+    "title3":       {"size": 15, "weight": "regular", "line_height": 20, "emphasized": "semibold"},
+    "headline":     {"size": 13, "weight": "bold", "line_height": 16, "emphasized": "heavy"},
+    "body":         {"size": 13, "weight": "regular", "line_height": 16, "emphasized": "semibold"},
+    "callout":      {"size": 12, "weight": "regular", "line_height": 15, "emphasized": "semibold"},
+    "subheadline":  {"size": 11, "weight": "regular", "line_height": 14, "emphasized": "semibold"},
+    "footnote":     {"size": 10, "weight": "regular", "line_height": 13, "emphasized": "semibold"},
+    "caption1":     {"size": 10, "weight": "regular", "line_height": 13, "emphasized": "medium"},
+    "caption2":     {"size": 10, "weight": "medium", "line_height": 13, "emphasized": "semibold"}
+  }
+}

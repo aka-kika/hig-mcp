@@ -1,0 +1,84 @@
+{
+  "_meta": {
+    "category": "sf_symbols",
+    "note": "Curated, commonly-used SF Symbols grouped by role, for when a component needs a glyph. These are stable, widely-available system symbol names — but Apple adds/renames symbols and gates availability per OS release.",
+    "src": "apple-sfsymbols",
+    "verify": true,
+    "verify_against": "SF Symbols app (current version) — confirm exact name, minimum-OS availability, weights, and rendering mode before shipping.",
+    "usage": "SwiftUI: Image(systemName: \"<name>\") or Label(\"...\", systemImage: \"<name>\"). Pair with .symbolRenderingMode(.hierarchical | .palette) and .imageScale; never hardcode a point size — size via the text style.",
+    "fill_convention": "Many glyphs ship a base + .fill pair. Use .fill for selected tab items / active controls, the base outline for unselected/idle."
+  },
+  "navigation": {
+    "back": "chevron.backward",
+    "forward": "chevron.forward",
+    "up": "chevron.up",
+    "down": "chevron.down",
+    "close": "xmark",
+    "more": "ellipsis",
+    "more_circle": "ellipsis.circle",
+    "menu": "line.3.horizontal",
+    "disclosure": "chevron.right"
+  },
+  "tab_bar": {
+    "home": "house",
+    "home_selected": "house.fill",
+    "search": "magnifyingglass",
+    "library": "music.note.list",
+    "profile": "person.crop.circle",
+    "profile_selected": "person.crop.circle.fill",
+    "settings": "gearshape",
+    "settings_selected": "gearshape.fill",
+    "favorites": "star",
+    "favorites_selected": "star.fill",
+    "notifications": "bell",
+    "notifications_selected": "bell.fill"
+  },
+  "actions": {
+    "add": "plus",
+    "add_circle": "plus.circle.fill",
+    "remove": "minus",
+    "delete": "trash",
+    "edit": "pencil",
+    "share": "square.and.arrow.up",
+    "confirm": "checkmark",
+    "cancel": "xmark",
+    "refresh": "arrow.clockwise",
+    "favorite": "heart",
+    "favorite_active": "heart.fill",
+    "bookmark": "bookmark",
+    "bookmark_active": "bookmark.fill"
+  },
+  "media": {
+    "play": "play.fill",
+    "pause": "pause.fill",
+    "stop": "stop.fill",
+    "previous": "backward.fill",
+    "next": "forward.fill",
+    "skip_back": "backward.end.fill",
+    "skip_forward": "forward.end.fill",
+    "shuffle": "shuffle",
+    "repeat": "repeat",
+    "volume": "speaker.wave.2.fill",
+    "mute": "speaker.slash.fill"
+  },
+  "status": {
+    "success": "checkmark.circle.fill",
+    "warning": "exclamationmark.triangle.fill",
+    "error": "xmark.circle.fill",
+    "info": "info.circle.fill",
+    "help": "questionmark.circle"
+  },
+  "content": {
+    "calendar": "calendar",
+    "clock": "clock",
+    "folder": "folder",
+    "document": "doc.text",
+    "mail": "envelope.fill",
+    "send": "paperplane.fill",
+    "phone": "phone.fill",
+    "camera": "camera.fill",
+    "photo": "photo",
+    "location": "location.fill",
+    "map": "map"
+  }
+}

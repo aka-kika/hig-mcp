@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "category": "materials",
+    "note": "System materials are Apple-defined blur levels. The Liquid Glass numeric budgets below are NOT all Apple-published numbers — several come from independent accessibility audits and Figma's Glass effect. Provenance is tagged per rule. Treat 'community-bestpractice' as guardrails to confirm, not gospel.",
+    "verify_against": "HIG > Foundations > Materials; WWDC 'Meet Liquid Glass'; current Xcode SwiftUI glass APIs"
+  },
+  "system_materials": {
+    "src": "apple-hig",
+    "levels": ["ultraThinMaterial", "thinMaterial", "regularMaterial", "thickMaterial", "chromeMaterial"],
+    "guidance": "Pick a level by how much background should read through. Heavier material = more legible foreground, less depth. Use vibrancy for text/symbols on top of materials."
+  },
+  "liquid_glass": {
+    "apple_guidance":          {"rule": "Apple publishes NO numeric blur-radius cap or layer count. The stated rule is qualitative: reserve Liquid Glass for the navigation layer (bars, controls, sheets), not main content; let content scroll behind it. The numeric budgets below are community/Figma heuristics to confirm, NOT Apple values.", "src": "apple-hig", "verify_against": "HIG > Foundations > Materials; WWDC25 'Meet Liquid Glass'"},
+    "blur_radius_max_px":      {"iphone": 40, "ipad_mac": 60, "src": "community-bestpractice", "verify": true},
+    "max_compositing_layers":  {"value": 4, "scope": "per screen", "src": "community-bestpractice", "verify": true},
+    "control_depth_max":       {"value": 20, "note": "Figma Glass 'Depth' >20 harms readability for UI controls", "src": "figma-effect"},
+    "frost_range":             {"min": 10, "max": 25, "note": "Figma Glass 'Frost'; >30 reads as milky plastic", "src": "figma-effect"},
+    "min_text_contrast":       {"ratio": "4.5:1", "when": "measured AFTER blur against the actual backdrop", "src": "wcag-aa"},
+    "over_photo":              {"rule": "Custom .glassEffect loses the 4.5:1 contrast guarantee over a busy or high-contrast photo. When the backdrop is photographic: (a) prefer a heavier system material (thickMaterial / chromeMaterial) behind text instead of custom glass, OR (b) lay a legibility scrim between photo and text — a linear gradient from .clear to a semantic background/fill (e.g. Color(.systemBackground)) over the text band — then re-measure contrast AFTER blur. Never rely on glass alone for legibility over imagery.", "src": "apple-hig + community-bestpractice", "verify": true},
+    "fallback": {
+      "trigger": "prefers-reduced-transparency (Reduce Transparency / Increase Contrast)",
+      "rule": "Ship a solid (or near-solid ~20% opacity over solid) variant and swap at runtime. Never rely on translucency for legibility.",
+      "src": "apple-hig"
+    },
+    "lift_tip": {"note": "Keep text/symbols on a layer ABOVE the glass group; a subtle inner light (white ~30%, blur ~6) helps separation.", "src": "community-bestpractice"}
+  }
+}

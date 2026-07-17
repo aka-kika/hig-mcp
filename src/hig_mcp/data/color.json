@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "category": "color",
+    "note": "Vivid system color values were REFRESHED by Apple on 2025-06-09 (WWDC25 / Liquid Glass). The values below are the current HIG Default-appearance spec table, fetched 2026-06-23 via sosumi.ai. They remain ADAPTIVE tokens: reference by name in code (Color(.blue), Color(.label), .secondarySystemBackground), never hardcode hex, so they adapt to light/dark/increase-contrast automatically. Hex is reference-only.",
+    "values_asof": "HIG Color spec table, Default appearance; values last changed 2025-06-09 per HIG changelog. Re-verified 2026-07-17 vs live HIG: changelog shows no WWDC26 color change (latest entry 2025-12-16, Liquid Glass guidance only) and all hex values still match.",
+    "verify_against": "Apple Design Resources Figma plugin + SF Symbols app for the current OS (final pixel check)"
+  },
+  "system": {
+    "systemBlue":   {"light": "#0088FF", "dark": "#0091FF", "src": "apple-system"},
+    "systemGreen":  {"light": "#34C759", "dark": "#30D158", "src": "apple-system"},
+    "systemIndigo": {"light": "#6155F5", "dark": "#6D7CFF", "src": "apple-system"},
+    "systemOrange": {"light": "#FF8D28", "dark": "#FF9230", "src": "apple-system"},
+    "systemPink":   {"light": "#FF2D55", "dark": "#FF375F", "src": "apple-system"},
+    "systemPurple": {"light": "#CB30E0", "dark": "#DB34F2", "src": "apple-system"},
+    "systemRed":    {"light": "#FF383C", "dark": "#FF4245", "src": "apple-system"},
+    "systemTeal":   {"light": "#00C3D0", "dark": "#00D2E0", "src": "apple-system"},
+    "systemYellow": {"light": "#FFCC00", "dark": "#FFD600", "src": "apple-system"},
+    "systemGray":   {"light": "#8E8E93", "dark": "#8E8E93", "src": "apple-system"}
+  },
+  "system_gray_ramp": {
+    "note": "iOS/iPadOS gray ramp, Default appearance, current HIG (verified 2026-06-24). systemGray is the base (above); 2-6 step lighter in Light and darker in Dark. Unchanged by the 2025-06-09 vivid-color refresh.",
+    "systemGray2": {"light": "#AEAEB2", "dark": "#636366", "src": "apple-system"},
+    "systemGray3": {"light": "#C7C7CC", "dark": "#48484A", "src": "apple-system"},
+    "systemGray4": {"light": "#D1D1D6", "dark": "#3A3A3C", "src": "apple-system"},
+    "systemGray5": {"light": "#E5E5EA", "dark": "#2C2C2E", "src": "apple-system"},
+    "systemGray6": {"light": "#F2F2F7", "dark": "#1C1C1E", "src": "apple-system"}
+  },
+  "semantic_dynamic": {
+    "note": "Do not hardcode. Use the named role; the system resolves the value per appearance.",
+    "roles": [
+      "label", "secondaryLabel", "tertiaryLabel", "quaternaryLabel",
+      "systemBackground", "secondarySystemBackground", "tertiarySystemBackground",
+      "systemGroupedBackground", "separator", "opaqueSeparator",
+      "systemFill", "secondarySystemFill", "tertiarySystemFill", "quaternarySystemFill",
+      "tintColor"
+    ]
+  }
+}
