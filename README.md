@@ -69,6 +69,10 @@ jq -r .client ~/.local/state/hig-mcp/calls.jsonl | sort | uniq -c
 
 **What platforms?** iOS / iPadOS today, verified macOS type ramp included; values track the current HIG (last verified July 2026, post-WWDC26).
 
+## Legal
+
+Apple, the Apple Human Interface Guidelines, SF Symbols, SwiftUI, and Liquid Glass are trademarks of Apple Inc. This project is not affiliated with or endorsed by Apple. No HIG prose is redistributed — `hig_fetch` retrieves pages live at runtime, and the bundled data files contain factual design values with original commentary. The MIT license covers this repository's code and data files only.
+
 ---
 
 *Keywords: Apple HIG MCP server · Human Interface Guidelines · design tokens · Liquid Glass · SwiftUI · iOS 26 · macOS Tahoe · Model Context Protocol · Claude Code · Cursor · AI coding agents*
