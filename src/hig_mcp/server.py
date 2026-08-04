@@ -21,7 +21,7 @@ from typing import Any, Optional
 import httpx
 from pydantic import BaseModel, ConfigDict, Field
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from . import tokens
 
@@ -38,27 +38,30 @@ CALL_LOG = Path(
     / "hig-mcp" / "calls.jsonl"
 )
 
-mcp = FastMCP("hig_mcp")
+async def _count_tool_calls(ctx, call_next):
+    """mcp 2.x server middleware: one JSONL line per tool call (ts, tool, client)."""
+    if ctx.method == "tools/call":
+        try:
+            try:
+                cp = ctx.session.client_params
+                info = getattr(cp, "client_info", None) or getattr(cp, "clientInfo")
+                client, client_version = info.name, info.version
+            except Exception:  # noqa: BLE001 - client identity is best-effort
+                client, client_version = "unknown", None
+            CALL_LOG.parent.mkdir(parents=True, exist_ok=True)
+            with CALL_LOG.open("a", encoding="utf-8") as f:
+                f.write(json.dumps({
+                    "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                    "tool": (ctx.params or {}).get("name", "?"),
+                    "client": client,
+                    "client_version": client_version,
+                }) + "\n")
+        except Exception:  # noqa: BLE001
+            pass  # counting must never break a tool call
+    return await call_next(ctx)
 
 
-def _log_call(tool: str) -> None:
-    """Append one JSONL line per tool call (ts, tool, calling client)."""
-    try:
-        info = mcp.get_context().session.client_params.clientInfo
-        client, client_version = info.name, info.version
-    except Exception:  # noqa: BLE001 - client identity is best-effort
-        client, client_version = "unknown", None
-    try:
-        CALL_LOG.parent.mkdir(parents=True, exist_ok=True)
-        with CALL_LOG.open("a", encoding="utf-8") as f:
-            f.write(json.dumps({
-                "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "tool": tool,
-                "client": client,
-                "client_version": client_version,
-            }) + "\n")
-    except OSError:
-        pass  # counting must never break a tool call
+mcp = MCPServer("hig_mcp", middleware=[_count_tool_calls])
 
 
 # --- Shared helpers --------------------------------------------------------
@@ -166,7 +169,6 @@ async def hig_get_tokens(params: GetTokensInput) -> dict[str, Any]:
     Returns:
         dict: the requested token category (or all categories), as structured data.
     """
-    _log_call("hig_get_tokens")
     if params.category == TokenCategory.all:
         return tokens.load_all()
     return tokens.load_category(params.category.value)
@@ -196,7 +198,6 @@ async def hig_check_liquid_glass(params: LiquidGlassInput) -> dict[str, Any]:
     Returns:
         dict: applicable rules, the platform blur cap, and a checklist.
     """
-    _log_call("hig_check_liquid_glass")
     materials = tokens.load_category("materials")
     lg = materials["liquid_glass"]
     plat = "ipad_mac" if params.platform.lower() in ("ipad", "mac", "ipad_mac") else "iphone"
@@ -242,7 +243,6 @@ async def hig_swiftui(params: SwiftUIInput) -> dict[str, Any]:
     Returns:
         dict: mapping with swiftui API, token refs, hig_path, and verify flags.
     """
-    _log_call("hig_swiftui")
     data = tokens.load_category("swiftui")
     components = data["components"]
     if params.component is None:
@@ -279,7 +279,6 @@ async def hig_fetch(params: FetchInput) -> dict[str, Any]:
     Returns:
         dict: markdown content, the sosumi source, and the canonical Apple URL.
     """
-    _log_call("hig_fetch")
     path = _normalize_path(params.path)
     url = f"{SOSUMI_BASE}{path}"
     try:
