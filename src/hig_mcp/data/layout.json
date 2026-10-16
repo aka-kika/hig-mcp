@@ -2,12 +2,21 @@
   "_meta": {
     "category": "layout",
     "note": "Apple does NOT publish a numeric spacing or radius scale. The hit target and continuous-corner facts are from the HIG; the spacing grid and radii are common community conventions, tagged as such. Prefer system spacing (SwiftUI default padding, Layout Margins) over magic numbers.",
-    "verify_against": "HIG > Foundations > Layout"
+    "verify_against": "HIG > Foundations > Layout; HIG > Accessibility (control sizes)",
+    "checked": "2026-10-17"
   },
   "hit_target": {
     "min_pt": 44, "shape": "44x44", "src": "apple-hig",
-    "note": "Minimum comfortable tappable area for any control.",
-    "platform": "44x44pt is the TOUCH target — iOS / iPadOS / visionOS (gaze + pinch). macOS is pointer-based: standard control heights are smaller (~20-28pt) and there is no 44pt rule; verify against the macOS HIG before applying this on Mac."
+    "note": "min_pt / shape = the DEFAULT (recommended) control size on iOS / iPadOS, kept under this name for compatibility; Apple's hard minimum there is 28x28. Other platforms differ: see per_platform. Never go below the minimum.",
+    "per_platform": {
+      "ios_ipados": {"default": "44x44", "minimum": "28x28"},
+      "macos":      {"default": "28x28", "minimum": "20x20"},
+      "tvos":       {"default": "66x66", "minimum": "56x56"},
+      "visionos":   {"default": "60x60", "minimum": "28x28"},
+      "watchos":    {"default": "44x44", "minimum": "28x28"}
+    },
+    "spacing_between_controls": {"bezeled_pt": 12, "no_bezel_pt": 24, "note": "About 12pt of padding around controls with a bezel; about 24pt around the visible edges of controls without one."},
+    "source": "HIG > Accessibility > Mobility (control size table), checked 2026-10-17"
   },
   "spacing": {
     "src": "convention",

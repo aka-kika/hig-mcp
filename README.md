@@ -29,12 +29,14 @@ Curated, verified token files live **inside the server** — offline, determinis
 
 ## How it works
 
-Four tools over stdio (Python, FastMCP). The structured half is plain JSON you own and extend (`src/hig_mcp/data/`); the prose half is delegated to sosumi.ai's DocC-to-Markdown rendering rather than rebuilt. Every value is provenance-tagged:
+Four tools over stdio (Python, the official `mcp` SDK 2.x). The structured half is plain JSON you own and extend (`src/hig_mcp/data/`); the prose half is delegated to sosumi.ai's DocC-to-Markdown rendering rather than rebuilt. Every value is provenance-tagged:
 
 - `apple-system` / `apple-hig` — Apple-published facts (system colors, type ramp, 44pt hit targets).
 - `wcag-aa` — the 4.5:1 contrast rule.
 - `figma-effect` / `community-bestpractice` — useful numbers Apple never published, flagged so you know to confirm.
 - `verify: true` — beta-era API names that shift; confirm via `hig_fetch` or Xcode before shipping.
+
+Each data file also carries a `checked` date in its `_meta`: the day its values were last compared with Apple's live pages.
 
 Honest data beats confident data.
 
@@ -67,7 +69,27 @@ jq -r .client ~/.local/state/hig-mcp/calls.jsonl | sort | uniq -c
 
 **Does it replace sosumi.ai / apple-docs-mcp?** No — it deliberately delegates prose to them and owns only the structured layer they don't serve.
 
-**What platforms?** iOS / iPadOS today, verified macOS type ramp included; values track the current HIG (last verified July 2026, post-WWDC26).
+**What platforms?** iOS / iPadOS first, with the macOS type ramp and per-platform control sizes (iOS, macOS, tvOS, visionOS, watchOS). Values were last checked on **2026-10-17** against the live HIG and Apple's SwiftUI docs for OS 26 (shipping) and the OS 27 betas.
+
+## Limits
+
+Plain words on what this server is and is not:
+
+- **Curated project data, not an Apple SDK.** The values are copied by hand from Apple's public HIG pages and docs, then checked. Apple does not publish them as data, and this project is not Apple's. If a value matters, confirm it in Xcode or the Apple Design Resources.
+- **Beta-era names are checked as of 2026-10-17.** Liquid Glass and other OS 26 APIs were checked against Apple's docs on that date; anything marked 27.0+ comes from the OS 27 betas and can still be renamed before release. Those entries carry `verify: true`.
+- **Some numbers are not Apple's.** The Liquid Glass blur and layer budgets, the spacing grid and the corner radii are community or Figma conventions. Each one says so in its `src` tag.
+- **Prose needs the network.** `hig_fetch` downloads pages live from [sosumi.ai](https://sosumi.ai) (or your `HIG_SOSUMI_BASE`). Offline, or if sosumi.ai is down, the three token tools still work and `hig_fetch` returns an error.
+- **It does not review your app.** It hands an agent the rules and the values; it does not look at your code or screenshots.
+
+**A good pairing:** a full Apple docs server for API reference (for example [apple-docs-mcp](https://github.com/kimsungwhee/apple-docs-mcp) or sosumi.ai's own MCP), plus a HIG review tool that checks SwiftUI code and screenshots against the guidelines (for example [hig-review](https://github.com/nlaratta/hig-review)).
+
+## Development
+
+```sh
+uv run --with pytest pytest -q
+```
+
+Changes per release are in [CHANGELOG.md](CHANGELOG.md).
 
 ## Legal
 

@@ -14,3 +14,4 @@
 ## Data freshness
 
 - Color values re-verified 2026-07-17 vs live HIG: changelog shows no WWDC26 color change (latest entry 2025-12-16, Liquid Glass guidance only); all hex values match.
+- 2026-10-17 (0.3.0): full check vs live HIG + SwiftUI docs (OS 26, OS 27 betas). Colors unchanged; added mint/cyan/brown + increased-contrast values; iOS line heights; fixed visionOS/macOS control sizes; materials fixed (no chromeMaterial in SwiftUI; Apple's clear-glass 35% dimming rule). All 61 SF Symbol names resolve on macOS 27.2.

@@ -1,25 +1,47 @@
 {
   "_meta": {
     "category": "materials",
-    "note": "System materials are Apple-defined blur levels. The Liquid Glass numeric budgets below are NOT all Apple-published numbers — several come from independent accessibility audits and Figma's Glass effect. Provenance is tagged per rule. Treat 'community-bestpractice' as guardrails to confirm, not gospel.",
-    "verify_against": "HIG > Foundations > Materials; WWDC 'Meet Liquid Glass'; current Xcode SwiftUI glass APIs"
+    "note": "Apple platforms have two kinds of material: Liquid Glass (the functional layer: controls and navigation) and standard materials (the content layer). Apple's guidance is qualitative except where tagged apple-hig. The numeric blur/layer budgets are NOT Apple numbers: they come from independent accessibility audits and Figma's Glass effect, are tagged per rule, and are guardrails to confirm, not gospel.",
+    "verify_against": "HIG > Foundations > Materials; WWDC25 'Meet Liquid Glass'; SwiftUI 'Applying Liquid Glass to custom views'; current Xcode SDK",
+    "checked": "2026-10-17 against the live HIG Materials page (last changed 2025-09-09) and the SwiftUI docs for OS 26 and the OS 27 betas"
   },
   "system_materials": {
     "src": "apple-hig",
-    "levels": ["ultraThinMaterial", "thinMaterial", "regularMaterial", "thickMaterial", "chromeMaterial"],
-    "guidance": "Pick a level by how much background should read through. Heavier material = more legible foreground, less depth. Use vibrancy for text/symbols on top of materials."
+    "swiftui": [".ultraThinMaterial", ".thinMaterial", ".regularMaterial", ".thickMaterial", ".ultraThickMaterial", ".bar"],
+    "ios_ipados": "The HIG names four standard materials for the content layer: ultra-thin, thin, regular (default), thick. SwiftUI also offers .ultraThickMaterial and .bar (matches system toolbars). UIKit: UIBlurEffect.Style (.systemUltraThinMaterial ... .systemChromeMaterial).",
+    "macos": "macOS materials have designated purposes (sidebar, menu, popover, headerView, windowBackground...): use NSVisualEffectView.Material by purpose, with a behind-window or within-window blending mode.",
+    "guidance": "Pick a material by meaning and use, not by the color it seems to give. Thicker = more opaque = better contrast for text and fine detail; thinner = more context shows through. Put vibrant colors (label, secondaryLabel, fill, separator vibrancy) on top; avoid quaternary label vibrancy on thin and ultraThin."
   },
   "liquid_glass": {
-    "apple_guidance":          {"rule": "Apple publishes NO numeric blur-radius cap or layer count. The stated rule is qualitative: reserve Liquid Glass for the navigation layer (bars, controls, sheets), not main content; let content scroll behind it. The numeric budgets below are community/Figma heuristics to confirm, NOT Apple values.", "src": "apple-hig", "verify_against": "HIG > Foundations > Materials; WWDC25 'Meet Liquid Glass'"},
+    "apple_guidance": {
+      "rule": "Liquid Glass is the functional layer for controls and navigation (tab bars, toolbars, sidebars, sheets) that floats above content. Don't use it in the content layer; use standard materials there. Exception: transient interactive controls in the content layer, like sliders and toggles. System components adopt it automatically; apply it to custom controls sparingly, only for the most important functional elements. Apple publishes NO numeric blur-radius cap or layer count.",
+      "src": "apple-hig",
+      "verify_against": "HIG > Foundations > Materials > Liquid Glass"
+    },
+    "variants": {
+      "regular": "Default (Glass.regular). Blurs and adjusts the luminosity of what is behind it to keep text legible. Use it for most components, and always for text-heavy ones: alerts, sidebars, popovers.",
+      "clear": "Glass.clear. Highly translucent. Only for components that float over visually rich backgrounds such as photos and video. Needs a dimming layer when the content behind is bright (see clear_dimming).",
+      "identity": "Glass.identity. No effect: use it to switch glass off conditionally without changing the view tree.",
+      "user_settings": "The look can change with system settings: the person's preferred Liquid Glass look, Reduce Transparency, Increase Contrast. Test with all of them.",
+      "src": "apple-hig"
+    },
+    "clear_dimming": {
+      "rule": "Over bright content, add a dark dimming layer of about 35% opacity behind clear glass. Over dark enough content, or with AVKit's standard playback controls (they bring their own dimming), skip it.",
+      "swiftui": ".glassEffect(.clear).background(.black.opacity(0.35))",
+      "src": "apple-hig"
+    },
     "blur_radius_max_px":      {"iphone": 40, "ipad_mac": 60, "src": "community-bestpractice", "verify": true},
     "max_compositing_layers":  {"value": 4, "scope": "per screen", "src": "community-bestpractice", "verify": true},
     "control_depth_max":       {"value": 20, "note": "Figma Glass 'Depth' >20 harms readability for UI controls", "src": "figma-effect"},
     "frost_range":             {"min": 10, "max": 25, "note": "Figma Glass 'Frost'; >30 reads as milky plastic", "src": "figma-effect"},
     "min_text_contrast":       {"ratio": "4.5:1", "when": "measured AFTER blur against the actual backdrop", "src": "wcag-aa"},
-    "over_photo":              {"rule": "Custom .glassEffect loses the 4.5:1 contrast guarantee over a busy or high-contrast photo. When the backdrop is photographic: (a) prefer a heavier system material (thickMaterial / chromeMaterial) behind text instead of custom glass, OR (b) lay a legibility scrim between photo and text — a linear gradient from .clear to a semantic background/fill (e.g. Color(.systemBackground)) over the text band — then re-measure contrast AFTER blur. Never rely on glass alone for legibility over imagery.", "src": "apple-hig + community-bestpractice", "verify": true},
+    "over_photo": {
+      "rule": "Over a photo or video: for floating controls, use clear glass plus the 35% dimming layer when the image is bright (clear_dimming). For text-heavy panels, use regular glass, or a standard material in the content layer (.thickMaterial / .ultraThickMaterial), or a legibility scrim (a gradient from .clear to a semantic background over the text band). Re-measure contrast AFTER blur either way; never rely on glass alone for legibility over imagery.",
+      "src": "apple-hig + community-bestpractice"
+    },
     "fallback": {
-      "trigger": "prefers-reduced-transparency (Reduce Transparency / Increase Contrast)",
-      "rule": "Ship a solid (or near-solid ~20% opacity over solid) variant and swap at runtime. Never rely on translucency for legibility.",
+      "trigger": "Reduce Transparency / Increase Contrast (accessibility settings)",
+      "rule": "System glass adapts by itself. For custom effects, ship a solid (or near-solid) variant and swap at runtime (SwiftUI: @Environment(\\.accessibilityReduceTransparency)). Never rely on translucency for legibility.",
       "src": "apple-hig"
     },
     "lift_tip": {"note": "Keep text/symbols on a layer ABOVE the glass group; a subtle inner light (white ~30%, blur ~6) helps separation.", "src": "community-bestpractice"}

@@ -8,7 +8,8 @@ Key facts:
 - Apple refreshed system color values on 2025-06-09 (WWDC25 / Liquid Glass); most LLM training data predates this. hig-mcp serves the current values.
 - Four tools: hig_get_tokens, hig_check_liquid_glass, hig_swiftui, hig_fetch.
 - Every token is provenance-tagged (apple-system, apple-hig, wcag-aa, figma-effect, community-bestpractice); uncertain values are flagged verify:true.
-- Install: pipx install . && claude mcp add hig -- hig-mcp
+- Install: pipx install hig-mcp && claude mcp add hig -- hig-mcp
+- Limits: values are curated project data (not an Apple SDK), last checked 2026-10-17 against OS 26 and the OS 27 betas; hig_fetch needs network access to sosumi.ai.
 
 Repo: https://github.com/aka-kika/hig-mcp
 Docs: README.md

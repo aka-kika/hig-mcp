@@ -7,3 +7,4 @@ build/
 .cache/
 logs
 docs/assets/*.webp
+uv.lock

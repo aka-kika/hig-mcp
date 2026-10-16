@@ -23,14 +23,14 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from mcp.server.mcpserver import MCPServer
 
-from . import tokens
+from . import __version__, tokens
 
 # --- Constants -------------------------------------------------------------
 
 SOSUMI_BASE = os.environ.get("HIG_SOSUMI_BASE", "https://sosumi.ai").rstrip("/")
 APPLE_HIG_BASE = "https://developer.apple.com"
 HTTP_TIMEOUT = 20.0
-USER_AGENT = "hig-mcp/0.1 (+https://github.com/aka-kika/hig-mcp)"
+USER_AGENT = f"hig-mcp/{__version__} (+https://github.com/aka-kika/hig-mcp)"
 
 CALL_LOG = Path(
     os.environ.get("HIG_MCP_CALL_LOG")
@@ -61,7 +61,7 @@ async def _count_tool_calls(ctx, call_next):
     return await call_next(ctx)
 
 
-mcp = MCPServer("hig_mcp", middleware=[_count_tool_calls])
+mcp = MCPServer("hig_mcp", version=__version__, middleware=[_count_tool_calls])
 
 
 # --- Shared helpers --------------------------------------------------------
@@ -209,7 +209,8 @@ async def hig_check_liquid_glass(params: LiquidGlassInput) -> dict[str, Any]:
         f"Text contrast \u2265 {lg['min_text_contrast']['ratio']} measured AFTER blur, against the real backdrop.",
         "Keep text/symbols on a layer above the glass; use vibrancy, not raw color.",
         f"Provide a {lg['fallback']['trigger']} fallback: {lg['fallback']['rule']}",
-        "If the backdrop is busy/high-contrast (e.g. a photo), prefer a heavier system material over custom glass.",
+        "Glass belongs to the navigation/control layer only; use standard materials in the content layer.",
+        lg['over_photo']['rule'],
     ]
     return {
         "status": "ok",
@@ -238,7 +239,7 @@ async def hig_swiftui(params: SwiftUIInput) -> dict[str, Any]:
     because names shift between betas — confirm via hig_fetch or Xcode before shipping.
 
     Args:
-        params.component: button | navigation_bar | tab_bar | list | sheet (omit to list all)
+        params.component: one of the 14 mapped components, e.g. button, tab_bar, sheet (omit to list all)
 
     Returns:
         dict: mapping with swiftui API, token refs, hig_path, and verify flags.

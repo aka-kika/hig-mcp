@@ -4,6 +4,7 @@
     "note": "Curated, commonly-used SF Symbols grouped by role, for when a component needs a glyph. These are stable, widely-available system symbol names — but Apple adds/renames symbols and gates availability per OS release.",
     "src": "apple-sfsymbols",
     "verify": true,
+    "checked": "2026-10-17: every name below resolves on macOS 27.2 (NSImage(systemSymbolName:)).",
     "verify_against": "SF Symbols app (current version) — confirm exact name, minimum-OS availability, weights, and rendering mode before shipping.",
     "usage": "SwiftUI: Image(systemName: \"<name>\") or Label(\"...\", systemImage: \"<name>\"). Pair with .symbolRenderingMode(.hierarchical | .palette) and .imageScale; never hardcode a point size — size via the text style.",
     "fill_convention": "Many glyphs ship a base + .fill pair. Use .fill for selected tab items / active controls, the base outline for unselected/idle."

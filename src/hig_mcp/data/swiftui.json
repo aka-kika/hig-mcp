@@ -1,27 +1,29 @@
 {
   "_meta": {
     "category": "swiftui",
-    "note": "Maps HIG components to SwiftUI. Stable APIs (Button, NavigationStack, TabView, List) are confident. Liquid-Glass modifier names below were confirmed against iOS 26 shipping APIs (2026-06); still confirm exact signatures via Xcode quick-help before shipping.",
-    "liquid_glass_api": ".glassEffect(_:in:) takes a Glass value: .regular (default) or .clear; chain .interactive() for touch response and .tint(Color) for colored glass. Wrap multiple glass shapes in GlassEffectContainer to merge/morph them, and .glassEffectID(_:in:) to animate between them. Confirm exact signatures in Xcode.",
+    "note": "Maps HIG components to SwiftUI. Stable APIs (Button, NavigationStack, TabView, List) are confident. Liquid Glass names below were checked on 2026-10-17 against Apple's SwiftUI docs for OS 26 (shipping) and the OS 27 betas: all still present, none deprecated. APIs marked 27.0+ are beta-era: names can still change before release, so confirm in Xcode before shipping.",
+    "checked": "2026-10-17",
+    "liquid_glass_api": "All 26.0+. .glassEffect(_:in:) takes a Glass value: .regular (default), .clear (over media, with a dimming layer) or .identity (no effect); chain .interactive() for touch response and .tint(Color) for colored glass. Wrap multiple glass shapes in GlassEffectContainer to merge/morph them; .glassEffectID(_:in:) animates between them, .glassEffectUnion(id:namespace:) joins shapes into one, .glassEffectTransition(_:) picks .matchedGeometry or .materialize. Related: .scrollEdgeEffectStyle(_:for:), .backgroundExtensionEffect(), ToolbarSpacer. Confirm exact signatures in Xcode.",
     "verify_against": "current Xcode SDK + HIG component page"
   },
   "components": {
     "button": {
       "swiftui": "Button(action:label:)",
       "styles": [".bordered", ".borderedProminent", ".plain"],
-      "liquid_glass_style": {"name": ".buttonStyle(.glass) (secondary) | .buttonStyle(.glassProminent) (primary); custom views: .glassEffect(_:in:)", "src": "apple-system", "note": "Shipping iOS 26 APIs."},
+      "liquid_glass_style": {"name": ".buttonStyle(.glass) (secondary) | .buttonStyle(.glass(.clear)) (over media) | .buttonStyle(.glassProminent) (primary); custom views: .glassEffect(_:in:)", "src": "apple-system", "note": "26.0+. Tint only the one primary action (e.g. Done); a toolbar where every button is tinted is the HIG's own wrong example."},
       "tokens": ["color.system.systemBlue (tint)", "layout.hit_target", "typography.headline (label)"],
       "hig_path": "/design/human-interface-guidelines/buttons"
     },
     "navigation_bar": {
       "swiftui": "NavigationStack { ... }.toolbar { ... }",
+      "os27_beta": {"note": "27.0+ (beta, names may change): .toolbarMinimizationBehavior(.onScrollDown, for: .navigationBar); ToolbarItem placement .topBarPinnedTrailing; .visibilityPriority(_:) and ToolbarOverflowMenu for overflow.", "src": "apple-system", "verify": true},
       "large_title": ".navigationBarTitleDisplayMode(.large)",
       "tokens": ["typography.largeTitle", "materials.system_materials (bar background)"],
       "hig_path": "/design/human-interface-guidelines/navigation-bars"
     },
     "tab_bar": {
       "swiftui": "TabView { Tab(...) { ... } }",
-      "liquid_glass": {"note": "Liquid Glass is applied to TabView automatically in iOS 26 (plus scroll-edge effects); use .tabBarMinimizeBehavior to control minimize-on-scroll.", "src": "apple-system"},
+      "liquid_glass": {"note": "Liquid Glass is applied to TabView automatically from iOS 26 (plus scroll-edge effects); use .tabBarMinimizeBehavior(_:) (26.0+, not deprecated in 27) to control minimize-on-scroll. 27.0+ (beta): Tab(role: .prominent) puts one tab in a separate trailing spot, and .toolbarMinimizationBehavior(_:for: .navigationBar) also minimizes an integrated top tab bar.", "src": "apple-system", "verify": true},
       "tokens": ["color.system.systemBlue (selected)", "materials.liquid_glass"],
       "hig_path": "/design/human-interface-guidelines/tab-bars"
     },

@@ -4,4 +4,4 @@ Tokens, Liquid Glass constraints, and SwiftUI component mappings (offline);
 HIG prose via sosumi.ai (network). See server.py for the tool definitions.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.3.0"

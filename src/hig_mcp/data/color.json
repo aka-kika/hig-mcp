@@ -1,38 +1,36 @@
 {
   "_meta": {
     "category": "color",
-    "note": "Vivid system color values were REFRESHED by Apple on 2025-06-09 (WWDC25 / Liquid Glass). The values below are the current HIG Default-appearance spec table, fetched 2026-06-23 via sosumi.ai. They remain ADAPTIVE tokens: reference by name in code (Color(.blue), Color(.label), .secondarySystemBackground), never hardcode hex, so they adapt to light/dark/increase-contrast automatically. Hex is reference-only.",
-    "values_asof": "HIG Color spec table, Default appearance; values last changed 2025-06-09 per HIG changelog. Re-verified 2026-07-17 vs live HIG: changelog shows no WWDC26 color change (latest entry 2025-12-16, Liquid Glass guidance only) and all hex values still match.",
-    "verify_against": "Apple Design Resources Figma plugin + SF Symbols app for the current OS (final pixel check)"
+    "note": "Vivid system color values were REFRESHED by Apple on 2025-06-09 (WWDC25 / Liquid Glass). The values below are the HIG 'System colors' spec table: Default and Increased contrast, light and dark. They remain ADAPTIVE tokens: reference by name in code (Color.blue, Color(.label), .secondarySystemBackground), never hardcode hex, so they adapt to light/dark/increase-contrast automatically. Hex is reference-only. In SwiftUI the names drop the 'system' prefix (Color.mint, Color.cyan, Color.brown).",
+    "values_asof": "HIG Color spec table; values last changed 2025-06-09 per HIG changelog (latest entry 2025-12-16, Liquid Glass guidance only). Checked 2026-10-17 against the live HIG (OS 26 shipping, OS 27 betas): all values match; added mint, cyan, brown and the increased-contrast columns.",
+    "verify_against": "Apple Design Resources Figma plugin + SF Symbols app for the current OS (final pixel check)",
+    "checked": "2026-10-17"
   },
   "system": {
-    "systemBlue":   {"light": "#0088FF", "dark": "#0091FF", "src": "apple-system"},
-    "systemGreen":  {"light": "#34C759", "dark": "#30D158", "src": "apple-system"},
-    "systemIndigo": {"light": "#6155F5", "dark": "#6D7CFF", "src": "apple-system"},
-    "systemOrange": {"light": "#FF8D28", "dark": "#FF9230", "src": "apple-system"},
-    "systemPink":   {"light": "#FF2D55", "dark": "#FF375F", "src": "apple-system"},
-    "systemPurple": {"light": "#CB30E0", "dark": "#DB34F2", "src": "apple-system"},
-    "systemRed":    {"light": "#FF383C", "dark": "#FF4245", "src": "apple-system"},
-    "systemTeal":   {"light": "#00C3D0", "dark": "#00D2E0", "src": "apple-system"},
-    "systemYellow": {"light": "#FFCC00", "dark": "#FFD600", "src": "apple-system"},
-    "systemGray":   {"light": "#8E8E93", "dark": "#8E8E93", "src": "apple-system"}
+    "systemRed": {"light": "#FF383C", "dark": "#FF4245", "light_increased_contrast": "#E9152D", "dark_increased_contrast": "#FF6165", "src": "apple-system"},
+    "systemOrange": {"light": "#FF8D28", "dark": "#FF9230", "light_increased_contrast": "#C55300", "dark_increased_contrast": "#FFA056", "src": "apple-system"},
+    "systemYellow": {"light": "#FFCC00", "dark": "#FFD600", "light_increased_contrast": "#A16A00", "dark_increased_contrast": "#FEDF43", "src": "apple-system"},
+    "systemGreen": {"light": "#34C759", "dark": "#30D158", "light_increased_contrast": "#008932", "dark_increased_contrast": "#4AD968", "src": "apple-system"},
+    "systemMint": {"light": "#00C8B3", "dark": "#00DAC3", "light_increased_contrast": "#008575", "dark_increased_contrast": "#54DFCB", "src": "apple-system"},
+    "systemTeal": {"light": "#00C3D0", "dark": "#00D2E0", "light_increased_contrast": "#008198", "dark_increased_contrast": "#3BDDEC", "src": "apple-system"},
+    "systemCyan": {"light": "#00C0E8", "dark": "#3CD3FE", "light_increased_contrast": "#007EAE", "dark_increased_contrast": "#6DD9FF", "src": "apple-system"},
+    "systemBlue": {"light": "#0088FF", "dark": "#0091FF", "light_increased_contrast": "#1E6EF4", "dark_increased_contrast": "#5CB8FF", "src": "apple-system"},
+    "systemIndigo": {"light": "#6155F5", "dark": "#6D7CFF", "light_increased_contrast": "#564ADE", "dark_increased_contrast": "#A7AAFF", "src": "apple-system"},
+    "systemPurple": {"light": "#CB30E0", "dark": "#DB34F2", "light_increased_contrast": "#B02FC2", "dark_increased_contrast": "#EA8DFF", "src": "apple-system"},
+    "systemPink": {"light": "#FF2D55", "dark": "#FF375F", "light_increased_contrast": "#E7124D", "dark_increased_contrast": "#FF8AC4", "src": "apple-system"},
+    "systemBrown": {"light": "#AC7F5E", "dark": "#B78A66", "light_increased_contrast": "#956D51", "dark_increased_contrast": "#DBA679", "src": "apple-system"},
+    "systemGray": {"light": "#8E8E93", "dark": "#8E8E93", "light_increased_contrast": "#6C6C70", "dark_increased_contrast": "#AEAEB2", "src": "apple-system"}
   },
   "system_gray_ramp": {
-    "note": "iOS/iPadOS gray ramp, Default appearance, current HIG (verified 2026-06-24). systemGray is the base (above); 2-6 step lighter in Light and darker in Dark. Unchanged by the 2025-06-09 vivid-color refresh.",
-    "systemGray2": {"light": "#AEAEB2", "dark": "#636366", "src": "apple-system"},
-    "systemGray3": {"light": "#C7C7CC", "dark": "#48484A", "src": "apple-system"},
-    "systemGray4": {"light": "#D1D1D6", "dark": "#3A3A3C", "src": "apple-system"},
-    "systemGray5": {"light": "#E5E5EA", "dark": "#2C2C2E", "src": "apple-system"},
-    "systemGray6": {"light": "#F2F2F7", "dark": "#1C1C1E", "src": "apple-system"}
+    "note": "iOS/iPadOS gray ramp (HIG 'iOS, iPadOS system gray colors'). systemGray is the base (above); 2-6 step lighter in Light and darker in Dark. Unchanged by the 2025-06-09 vivid-color refresh. In SwiftUI, systemGray is Color.gray; Gray2-6 come from UIKit (Color(.systemGray2)).",
+    "systemGray2": {"light": "#AEAEB2", "dark": "#636366", "light_increased_contrast": "#8E8E93", "dark_increased_contrast": "#7C7C80", "src": "apple-system"},
+    "systemGray3": {"light": "#C7C7CC", "dark": "#48484A", "light_increased_contrast": "#AEAEB2", "dark_increased_contrast": "#545456", "src": "apple-system"},
+    "systemGray4": {"light": "#D1D1D6", "dark": "#3A3A3C", "light_increased_contrast": "#BCBCC0", "dark_increased_contrast": "#444446", "src": "apple-system"},
+    "systemGray5": {"light": "#E5E5EA", "dark": "#2C2C2E", "light_increased_contrast": "#D8D8DC", "dark_increased_contrast": "#363638", "src": "apple-system"},
+    "systemGray6": {"light": "#F2F2F7", "dark": "#1C1C1E", "light_increased_contrast": "#EBEBF0", "dark_increased_contrast": "#242426", "src": "apple-system"}
   },
   "semantic_dynamic": {
     "note": "Do not hardcode. Use the named role; the system resolves the value per appearance.",
-    "roles": [
-      "label", "secondaryLabel", "tertiaryLabel", "quaternaryLabel",
-      "systemBackground", "secondarySystemBackground", "tertiarySystemBackground",
-      "systemGroupedBackground", "separator", "opaqueSeparator",
-      "systemFill", "secondarySystemFill", "tertiarySystemFill", "quaternarySystemFill",
-      "tintColor"
-    ]
+    "roles": ["label", "secondaryLabel", "tertiaryLabel", "quaternaryLabel", "systemBackground", "secondarySystemBackground", "tertiarySystemBackground", "systemGroupedBackground", "separator", "opaqueSeparator", "systemFill", "secondarySystemFill", "tertiarySystemFill", "quaternarySystemFill", "tintColor"]
   }
 }
